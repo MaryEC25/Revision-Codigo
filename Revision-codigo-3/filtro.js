@@ -9,56 +9,41 @@ const productos = [
 ]
 
 
-const contenedorProductos = document.getElementById("lista-de-productos") //cambio de nombre a variable const, se modifica "getElementById"
+const listaProductos = document.getElementById("lista-de-productos") //cambio de nombre a variable const, se modifica "getElementById"
 const inputFiltro = document.querySelector("input"); //Se modifica el nombre de la variable.
-const botonFiltro = document.querySelector("button"); //se crea una variable que 
 
+function displayProductos(productosArray) { //se incorpora displayProductos como una función
+    for (let i = 0; i < productosArray.length; i++) {
+    const producto = document.createElement("div") //cambio en las variables var por const y un nombre más descriptivo
+    producto.classList.add("producto")
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
+    const titulo = document.createElement("p")
+    titulo.classList.add("titulo")
+    titulo.textContent = productosArray[i].nombre
 
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
+    const imagen = document.createElement("img");
+    imagen.setAttribute('src', productosArray[i].img);
 
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
+    producto.appendChild(titulo)
+    producto.appendChild(imagen)
 
-  d.appendChild(ti)
-  d.appendChild(imagen)
-
-  contenedorProductos.appendChild(d) //mo
+    listaProductos.appendChild(producto) //actualización de nombre de la variable.
+  }
 }
+displayProductos(productos); //Se llama a la funcion para mostrar los productos.
 
-displayProductos(productos)
+
 const botonDeFiltro = document.querySelector("button");
 
 botonDeFiltro.onclick = function () {
-  while (li.firstChild) {
-    li.removeChild(li.firstChild);
+  while (listaProductos.firstChild) { //actualización de nombre de la variable. 
+    listaProductos.removeChild(listaProductos.firstChild);
   }
-
-  const texto = $i.value;
+  const texto = inputFiltro.value;
   console.log(texto);
+
   const productosFiltrados = filtrado(productos, texto);
-
-  for (let i = 0; i < productosFiltrados.length; i++) {
-    var d = document.createElement("div")
-    d.classList.add("producto")
-
-    var ti = document.createElement("p")
-    ti.classList.add("titulo")
-    ti.textContent = productosFiltrados[i].nombre
-
-    var imagen = document.createElement("img");
-    imagen.setAttribute('src', productosFiltrados[i].img);
-
-    d.appendChild(ti)
-    d.appendChild(imagen)
-
-    li.appendChild(d)
-  }
+  displayProductos(productosFiltrados); //Se utiliza fa función displayProductos para no repetir el bloque de código.
 }
 
 const filtrado = (productos = [], texto) => {
